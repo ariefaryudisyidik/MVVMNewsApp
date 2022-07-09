@@ -1,7 +1,12 @@
-package com.androiddevs.mvvmnewsapp
+package com.androiddevs.mvvmnewsapp.data.remote.response
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "articles")
 data class Article(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null,
     val source: Source,
     val author: String,
     val title: String,

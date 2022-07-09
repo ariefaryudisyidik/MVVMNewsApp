@@ -1,7 +1,7 @@
-package com.androiddevs.mvvmnewsapp.api
+package com.androiddevs.mvvmnewsapp.data.remote.retrofit
 
 import com.androiddevs.mvvmnewsapp.BuildConfig.API_KEY
-import com.androiddevs.mvvmnewsapp.NewsResponse
+import com.androiddevs.mvvmnewsapp.data.remote.response.NewsResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

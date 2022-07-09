@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp.api
+package com.androiddevs.mvvmnewsapp.data.remote.retrofit
 
 import com.androiddevs.mvvmnewsapp.BuildConfig
 import com.androiddevs.mvvmnewsapp.utils.Constants.BASE_URL

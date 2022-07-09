@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp
+package com.androiddevs.mvvmnewsapp.data.remote.response
 
 
 data class NewsResponse(
