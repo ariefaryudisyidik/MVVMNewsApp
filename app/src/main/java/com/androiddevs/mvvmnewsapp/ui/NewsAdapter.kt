@@ -1,19 +1,18 @@
 package com.androiddevs.mvvmnewsapp.ui
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.data.remote.response.Article
+import com.androiddevs.mvvmnewsapp.databinding.ItemArticlePreviewBinding
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.item_article_preview.view.*
 
 class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
-    inner class NewsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    inner class NewsViewHolder(val binding: ItemArticlePreviewBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     private val diffCallback = object : DiffUtil.ItemCallback<Article>() {
         override fun areItemsTheSame(oldItem: Article, newItem: Article) =
@@ -23,12 +22,12 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
             oldItem == newItem
     }
 
-    val differ = AsyncListDiffer(this, diffCallback)
+    private val differ = AsyncListDiffer(this, diffCallback)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         NewsViewHolder(
-            LayoutInflater.from(parent.context).inflate(
-                R.layout.item_article_preview,
+            ItemArticlePreviewBinding.inflate(
+                LayoutInflater.from(parent.context),
                 parent,
                 false
             )
@@ -36,14 +35,23 @@ class NewsAdapter : RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article = differ.currentList[position]
-        holder.itemView.apply {
-            Glide.with(this).load(article.url).into(ivArticleImage)
+        holder.binding.apply {
+            Glide.with(holder.itemView).load(article.url).into(ivArticleImage)
             tvSource.text = article.source.name
             tvTitle.text = article.title
             tvDescription.text = article.description
             tvPublishedAt.text = article.publishedAt
+            setOnItemClickListener {
+                onItemClickListener?.let { it(article) }
+            }
         }
     }
 
     override fun getItemCount() = differ.currentList.size
+
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
+        onItemClickListener = listener
+    }
 }
