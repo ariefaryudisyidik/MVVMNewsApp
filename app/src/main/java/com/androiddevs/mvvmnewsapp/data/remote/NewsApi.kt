@@ -1,4 +1,4 @@
-package com.androiddevs.mvvmnewsapp.data.remote.retrofit
+package com.androiddevs.mvvmnewsapp.data.remote
 
 import com.androiddevs.mvvmnewsapp.BuildConfig.API_KEY
 import com.androiddevs.mvvmnewsapp.data.remote.response.NewsResponse
