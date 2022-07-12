@@ -1,6 +1,7 @@
 package com.androiddevs.mvvmnewsapp.di
 
-import com.androiddevs.mvvmnewsapp.data.local.room.NewsDatabase
+import com.androiddevs.mvvmnewsapp.data.local.room.NewsDao
+import com.androiddevs.mvvmnewsapp.data.remote.NewsApi
 import com.androiddevs.mvvmnewsapp.data.repository.NewsRepository
 import dagger.Module
 import dagger.Provides
@@ -14,6 +15,7 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideNewsRepository(db: NewsDatabase) =
-        NewsRepository(db)
+    fun provideNewsRepository(dao: NewsDao, api: NewsApi): NewsRepository {
+        return NewsRepository(dao, api)
+    }
 }

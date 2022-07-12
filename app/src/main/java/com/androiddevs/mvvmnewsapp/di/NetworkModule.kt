@@ -2,7 +2,7 @@ package com.androiddevs.mvvmnewsapp.di
 
 import androidx.viewbinding.BuildConfig
 import com.androiddevs.mvvmnewsapp.data.remote.NewsApi
-import com.androiddevs.mvvmnewsapp.utils.Constants
+import com.androiddevs.mvvmnewsapp.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -11,7 +11,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,7 +28,7 @@ object NetworkModule {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
