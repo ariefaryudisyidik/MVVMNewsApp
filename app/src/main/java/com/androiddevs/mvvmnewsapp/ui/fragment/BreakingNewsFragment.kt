@@ -59,7 +59,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     }
 
     private fun showMessage(message: String?) {
-        requireContext().toast(message)
+        message?.toast(requireContext())
     }
 
     private fun showLoading(visible: Boolean) {

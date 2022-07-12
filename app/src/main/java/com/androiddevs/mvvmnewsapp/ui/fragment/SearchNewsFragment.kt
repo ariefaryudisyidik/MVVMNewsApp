@@ -62,7 +62,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     }
 
     private fun showMessage(message: String?) {
-        requireContext().toast(message)
+        message?.toast(requireContext())
     }
 
     private fun showLoading(visible: Boolean) {

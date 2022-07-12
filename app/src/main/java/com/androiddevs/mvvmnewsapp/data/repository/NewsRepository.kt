@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.androiddevs.mvvmnewsapp.data.local.room.NewsDao
 import com.androiddevs.mvvmnewsapp.data.remote.NewsApi
+import com.androiddevs.mvvmnewsapp.data.remote.response.Article
 import com.androiddevs.mvvmnewsapp.data.remote.response.NewsResponse
 import com.androiddevs.mvvmnewsapp.utils.Resource
 import retrofit2.HttpException
@@ -38,4 +39,10 @@ class NewsRepository @Inject constructor(
             emit(Resource.Error("No Internet Connection"))
         }
     }
+
+    suspend fun upsert(article: Article) = dao.upsert(article)
+
+    fun getSavedArticle() = dao.getSavedArticle()
+
+    suspend fun deleteArticle(article: Article) = dao.deleteArticle(article)
 }
