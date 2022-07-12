@@ -26,4 +26,16 @@ class NewsRepository @Inject constructor(
             emit(Resource.Error("No Internet Connection"))
         }
     }
+
+    fun searchNews(searchQuery: String): LiveData<Resource<NewsResponse>> = liveData {
+        try {
+            emit(Resource.Loading())
+            val data = api.searchNews(searchQuery)
+            emit(Resource.Success(data))
+        } catch (e: HttpException) {
+            emit(Resource.Error(e.localizedMessage!!))
+        } catch (e: IOException) {
+            emit(Resource.Error("No Internet Connection"))
+        }
+    }
 }

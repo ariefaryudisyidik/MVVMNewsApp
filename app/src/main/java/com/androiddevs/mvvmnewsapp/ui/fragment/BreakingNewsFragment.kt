@@ -19,12 +19,15 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private var _binding: FragmentBreakingNewsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NewsViewModel by viewModels()
-    private lateinit var newsAdapter: NewsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentBreakingNewsBinding.bind(view)
 
+        getBreakingNews()
+    }
+
+    private fun getBreakingNews() {
         viewModel.getBreakingNews().observe(viewLifecycleOwner) { result ->
             when (result) {
                 is Resource.Loading -> {
@@ -33,7 +36,7 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Success -> {
                     showLoading(false)
                     result.data?.let {
-                        newsAdapter = NewsAdapter()
+                        val newsAdapter = NewsAdapter()
                         newsAdapter.differ.submitList(it.articles)
                         binding.rvBreakingNews.adapter = newsAdapter
                     }

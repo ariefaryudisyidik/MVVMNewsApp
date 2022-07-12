@@ -11,4 +11,6 @@ class NewsViewModel @Inject constructor(
 ) : ViewModel() {
 
     fun getBreakingNews() = newsRepository.getBreakingNews()
+
+    fun searchNews(searchQuery: String) = newsRepository.searchNews(searchQuery)
 }

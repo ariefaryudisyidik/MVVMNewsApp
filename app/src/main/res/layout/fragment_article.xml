@@ -18,7 +18,8 @@
         android:src="@drawable/ic_favorite"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/description" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
