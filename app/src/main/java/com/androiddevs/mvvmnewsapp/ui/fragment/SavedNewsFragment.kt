@@ -7,7 +7,6 @@ import androidx.navigation.fragment.findNavController
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.databinding.FragmentSavedNewsBinding
 import com.androiddevs.mvvmnewsapp.ui.NewsAdapter
-import com.androiddevs.mvvmnewsapp.utils.Constants.ARTICLE
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,12 +31,7 @@ class SavedNewsFragment : Fragment(R.layout.fragment_saved_news) {
 
     private fun navigateToArticle() {
         newsAdapter.setOnItemClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable(ARTICLE, it)
-            findNavController().navigate(
-                R.id.action_savedNewsFragment_to_articleFragment,
-                bundle
-            )
+            findNavController().navigate(SavedNewsFragmentDirections.toArticleFragment(it))
         }
     }
 

@@ -11,7 +11,6 @@ import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.databinding.FragmentSearchNewsBinding
 import com.androiddevs.mvvmnewsapp.ui.NewsAdapter
 import com.androiddevs.mvvmnewsapp.ui.NewsViewModel
-import com.androiddevs.mvvmnewsapp.utils.Constants.ARTICLE
 import com.androiddevs.mvvmnewsapp.utils.Extension.toast
 import com.androiddevs.mvvmnewsapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,12 +71,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
     private fun navigateToArticle() {
         newsAdapter.setOnItemClickListener {
-            val bundle = Bundle()
-            bundle.putParcelable(ARTICLE, it)
-            findNavController().navigate(
-                R.id.action_searchNewsFragment_to_articleFragment,
-                bundle
-            )
+            findNavController().navigate(SearchNewsFragmentDirections.toArticleFragment(it))
         }
     }
 
