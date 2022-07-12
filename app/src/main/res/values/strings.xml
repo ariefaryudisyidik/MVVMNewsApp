@@ -5,4 +5,7 @@
     <string name="source">SOURCE</string>
     <string name="title">TITLE</string>
     <string name="published_at">PUBLISHED AT</string>
+    <string name="search_news">Search News</string>
+    <string name="saved_news">Saved News</string>
+    <string name="breaking_news">Breaking News</string>
 </resources>

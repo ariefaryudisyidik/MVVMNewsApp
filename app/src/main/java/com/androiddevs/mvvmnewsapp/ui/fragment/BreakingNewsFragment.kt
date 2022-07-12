@@ -1,14 +1,17 @@
 package com.androiddevs.mvvmnewsapp.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.databinding.FragmentBreakingNewsBinding
 import com.androiddevs.mvvmnewsapp.ui.NewsAdapter
 import com.androiddevs.mvvmnewsapp.ui.NewsViewModel
+import com.androiddevs.mvvmnewsapp.utils.Constants.ARTICLE
 import com.androiddevs.mvvmnewsapp.utils.Extension.toast
 import com.androiddevs.mvvmnewsapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,12 +22,20 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
     private var _binding: FragmentBreakingNewsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NewsViewModel by viewModels()
+    private lateinit var newsAdapter: NewsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentBreakingNewsBinding.bind(view)
 
+        setupRecyclerView()
         getBreakingNews()
+        navigateToArticle()
+    }
+
+    private fun setupRecyclerView() {
+        newsAdapter = NewsAdapter()
+        binding.rvBreakingNews.adapter = newsAdapter
     }
 
     private fun getBreakingNews() {
@@ -36,9 +47,8 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
                 is Resource.Success -> {
                     showLoading(false)
                     result.data?.let {
-                        val newsAdapter = NewsAdapter()
+                        Log.d("TAG", "getBreakingNews: $it")
                         newsAdapter.differ.submitList(it.articles)
-                        binding.rvBreakingNews.adapter = newsAdapter
                     }
                 }
                 is Resource.Error -> {
@@ -55,6 +65,17 @@ class BreakingNewsFragment : Fragment(R.layout.fragment_breaking_news) {
 
     private fun showLoading(visible: Boolean) {
         binding.paginationProgressBar.isVisible = visible
+    }
+
+    private fun navigateToArticle() {
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable(ARTICLE, it)
+            findNavController().navigate(
+                R.id.action_breakingNewsFragment_to_articleFragment,
+                bundle
+            )
+        }
     }
 
     override fun onDestroy() {

@@ -6,10 +6,12 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.androiddevs.mvvmnewsapp.R
 import com.androiddevs.mvvmnewsapp.databinding.FragmentSearchNewsBinding
 import com.androiddevs.mvvmnewsapp.ui.NewsAdapter
 import com.androiddevs.mvvmnewsapp.ui.NewsViewModel
+import com.androiddevs.mvvmnewsapp.utils.Constants.ARTICLE
 import com.androiddevs.mvvmnewsapp.utils.Extension.toast
 import com.androiddevs.mvvmnewsapp.utils.Resource
 import dagger.hilt.android.AndroidEntryPoint
@@ -20,12 +22,20 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
     private var _binding: FragmentSearchNewsBinding? = null
     private val binding get() = _binding!!
     private val viewModel: NewsViewModel by viewModels()
+    private lateinit var newsAdapter: NewsAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSearchNewsBinding.bind(view)
 
+        setupRecyclerView()
         searchNews()
+        navigateToArticle()
+    }
+
+    private fun setupRecyclerView() {
+        newsAdapter = NewsAdapter()
+        binding.rvSearchNews.adapter = newsAdapter
     }
 
     private fun searchNews() {
@@ -39,9 +49,7 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
                         is Resource.Success -> {
                             showLoading(false)
                             result.data?.let {
-                                val newsAdapter = NewsAdapter()
                                 newsAdapter.differ.submitList(it.articles)
-                                binding.rvSearchNews.adapter = newsAdapter
                             }
                         }
                         is Resource.Error -> {
@@ -60,6 +68,17 @@ class SearchNewsFragment : Fragment(R.layout.fragment_search_news) {
 
     private fun showLoading(visible: Boolean) {
         binding.paginationProgressBar.isVisible = visible
+    }
+
+    private fun navigateToArticle() {
+        newsAdapter.setOnItemClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable(ARTICLE, it)
+            findNavController().navigate(
+                R.id.action_searchNewsFragment_to_articleFragment,
+                bundle
+            )
+        }
     }
 
     override fun onDestroy() {
