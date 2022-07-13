@@ -1,8 +1,8 @@
 package com.androiddevs.mvvmnewsapp.di
 
 import androidx.viewbinding.BuildConfig
+import com.androiddevs.mvvmnewsapp.BuildConfig.BASE_URL
 import com.androiddevs.mvvmnewsapp.data.remote.NewsApi
-import com.androiddevs.mvvmnewsapp.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
